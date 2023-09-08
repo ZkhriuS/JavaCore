@@ -33,7 +33,9 @@ public class Program {
                 break;
         }
     }
-
+    /**
+     * Запрос на ввод числового значения
+     */
     private static int promptValue(String message, String errorMessage) {
         int value;
         do {
@@ -49,10 +51,18 @@ public class Program {
         return value;
     }
 
+    /**
+     * Проверка корректности размера поля
+     * @param value
+     * @return
+     */
     private static boolean validFieldSize(int value) {
         return value > 0;
     }
 
+    /**
+     * Инициализация поля
+     */
     private static void initialize() {
         int valueX = promptValue("Введите размер поля по горизонтали:", "Введенный размер содержит нечисловые символы");
         sizeX = (validFieldSize(valueX)) ? valueX : 3;
@@ -68,6 +78,9 @@ public class Program {
         }
     }
 
+    /**
+     * Обработка вывода в консоль
+     */
     private static void printField() {
         System.out.print(" ");
         for (int i = 0; i < 2 * sizeY + 1; i++) {
@@ -86,6 +99,9 @@ public class Program {
         System.out.println();
     }
 
+    /**
+     * Обработка хода человека
+     */
     private static void humanTurn() {
         int posX, posY;
         do {
@@ -95,6 +111,9 @@ public class Program {
         field[posX][posY] = PLAYER;
     }
 
+    /**
+     * Обработка хода компьютера
+     */
     private static void botTurn() {
         int posX, posY;
         do {
@@ -104,6 +123,9 @@ public class Program {
         field[posX][posY] = BOT;
     }
 
+    /**
+     * Обработка хода умного компьютера
+     */
     private static void aiTurn() {
         int tempWin = winNumber;
         while(winNumber>2){
@@ -131,14 +153,32 @@ public class Program {
         botTurn();
     }
 
+    /**
+     * Проверка корректности координат поля
+     * @param x
+     * @param y
+     * @return
+     */
     private static boolean isCellValid(int x, int y) {
         return x >= 0 && x < sizeX && y >= 0 && y < sizeY;
     }
 
+    /**
+     * Проверка на пустую клетку
+     * @param x
+     * @param y
+     * @return
+     */
     private static boolean isCellEmpty(int x, int y) {
         return field[x][y] == EMPTY;
     }
 
+    /**
+     * Проверка текущего состояния игры
+     * @param c фишка игрока
+     * @param message сообщение о победе
+     * @return
+     */
     private static boolean checkGameState(char c, String message) {
         if (checkWin(c)) {
             System.out.println(message);
@@ -151,6 +191,11 @@ public class Program {
         return false;
     }
 
+    /**
+     * Проверка победы
+     * @param c фишка игрока
+     * @return
+     */
     private static boolean checkWin(char c) {
         // Проверка по трем горизонталям
         boolean result = false;
@@ -162,6 +207,11 @@ public class Program {
 
     }
 
+    /**
+     * Проверка горизонтальной комбинации
+     * @param c фишка игрока
+     * @return
+     */
     private static boolean checkWinHorizon(char c) {
         int counter = 0;
         for (int x = 0; x < sizeX; x++) {
@@ -177,6 +227,11 @@ public class Program {
         return false;
     }
 
+    /**
+     * Проверка вертикальной комбинации
+     * @param c фишка игрока
+     * @return
+     */
     private static boolean checkWinVertical(char c) {
         int counter = 0;
         for (int y = 0; y < sizeY; y++) {
@@ -192,6 +247,11 @@ public class Program {
         return false;
     }
 
+    /**
+     * Проверка комбинации в левой диагонали
+     * @param c фишка игрока
+     * @return
+     */
     private static boolean checkWinLeftDiag(char c) {
         int counter = 0;
         for (int x = 0; x <= sizeX - winNumber; x++) {
@@ -207,6 +267,11 @@ public class Program {
         return false;
     }
 
+    /**
+     * Проверка комбинации в правой диагонали
+     * @param c фишка игрока
+     * @return
+     */
     private static boolean checkWinRightDiag(char c) {
         int counter = 0;
         for (int x = sizeX - 1; x >= winNumber - 1; x--) {
@@ -222,6 +287,10 @@ public class Program {
         return false;
     }
 
+    /**
+     * Проверка на ничью
+     * @return
+     */
     private static boolean checkDraw() {
         for (int x = 0; x < sizeX; x++) {
             for (int y = 0; y < sizeY; y++) {
